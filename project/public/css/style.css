@@ -671,3 +671,365 @@ footer {
     }
 
 }
+
+/* ===== ASTANA GUIDE HERO ===== */
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 35px;
+}
+
+.hero {
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at center,
+        rgba(0, 180, 255, 0.16),
+        transparent 55%);
+}
+
+.hero-text {
+    max-width: 850px;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    color: #39DFFF;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 85px);
+    line-height: 1.15;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    display: block;
+    color: #A7F4FF;
+    text-shadow:
+        0 0 10px #25DFFF,
+        0 0 35px rgba(37, 223, 255, 0.6);
+}
+
+.hero-description {
+    color: #9CAFC0;
+    max-width: 600px;
+    margin: 25px auto 35px;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.hero-dots {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 55px;
+}
+
+.hero-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #25DFFF;
+    box-shadow: 0 0 12px #25DFFF;
+}
+
+.hero-caption {
+    margin-top: 20px;
+    font-size: 9px;
+    color: #526D82;
+    letter-spacing: 3px;
+}
+
+/* ===== WELCOME ===== */
+
+.welcome-section {
+    text-align: center;
+    padding: 100px 20px;
+    border-top: 1px solid rgba(37, 223, 255, 0.15);
+    border-bottom: 1px solid rgba(37, 223, 255, 0.15);
+    position: relative;
+}
+
+.welcome-decoration {
+    font-size: 45px;
+    color: #45DFFF;
+    text-shadow: 0 0 25px #25DFFF;
+    margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+.welcome-section span {
+    color: #8296A8;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* ===== PLACES ===== */
+
+.places-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    text-align: left;
+    margin: 0;
+    font-size: 34px;
+}
+
+.places-count {
+    color: #36DFFF;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* ===== CARDS ===== */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.card-image-wrapper {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: #080F19;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+    filter: brightness(0.8);
+}
+
+.card:hover .card-image {
+    transform: scale(1.06);
+    filter: brightness(1);
+}
+
+.card-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: white;
+    font-size: 13px;
+    background: rgba(0, 10, 20, 0.75);
+    border: 1px solid rgba(37, 223, 255, 0.5);
+    padding: 7px 12px;
+    border-radius: 5px;
+}
+
+.card-content {
+    padding: 22px;
+}
+
+.category {
+    color: #39DFFF;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.card-content h3 {
+    font-size: 20px;
+    color: white;
+    margin: 12px 0;
+}
+
+.card-description,
+.time {
+    color: #8799AA;
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.card-link,
+.banner-link {
+    color: #43DFFF;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.card-link:hover,
+.banner-link:hover {
+    text-shadow: 0 0 12px #25DFFF;
+}
+
+.card-link span {
+    margin-left: 7px;
+}
+
+/* ===== EMPTY STATE ===== */
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: #080E18;
+    border: 1px solid rgba(37, 223, 255, 0.15);
+    border-radius: 15px;
+}
+
+.empty-flower {
+    display: block;
+    color: #39DFFF;
+    font-size: 45px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #25DFFF;
+}
+
+.empty-state h3 {
+    margin-bottom: 12px;
+}
+
+.empty-state p {
+    color: #8799AA;
+    font-size: 13px;
+}
+
+/* ===== PLACEHOLDER ===== */
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #39DFFF;
+    letter-spacing: 5px;
+    background: radial-gradient(circle, #12334A, #03060D);
+}
+
+.placeholder-flower {
+    font-size: 50px;
+    margin-top: 15px;
+    text-shadow: 0 0 25px #25DFFF;
+}
+
+/* ===== ABOUT BANNER ===== */
+
+.about-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 65px;
+    margin-bottom: 80px;
+    background:
+        radial-gradient(ellipse at right,
+        rgba(0, 180, 255, 0.2),
+        transparent 60%),
+        #080E18;
+    border: 1px solid rgba(37, 223, 255, 0.25);
+    border-radius: 18px;
+}
+
+.about-banner h2 {
+    font-size: 32px;
+    margin: 15px 0;
+}
+
+.about-banner p:not(.subtitle) {
+    color: #8799AA;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+.banner-flower {
+    font-size: 110px;
+    color: #4DE4FF;
+    text-shadow: 0 0 40px #25DFFF;
+}
+
+/* ===== ADMIN BUTTONS ===== */
+
+.admin-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.admin-card-actions button {
+    font-size: 10px;
+    padding: 9px 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 0 18px;
+    }
+
+    .hero {
+        min-height: 520px;
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+    .welcome-section {
+        padding: 70px 15px;
+    }
+
+    .welcome-section h2 {
+        font-size: 27px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 26px;
+    }
+
+    .about-banner {
+        padding: 30px;
+    }
+
+    .banner-flower {
+        font-size: 55px;
+    }
+
+}
