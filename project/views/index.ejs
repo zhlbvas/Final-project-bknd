@@ -1,21 +1,28 @@
 
 <%- include("partials/head", { title: title }) %>
 
-<body>
+<body class="astana-page">
+
     <%- include("partials/header") %>
 
     <main class="container">
 
+        <!-- HERO -->
         <section class="hero">
-            <div class="hero-text">
-                <p class="subtitle">ПУТЕШЕСТВУЙ ПО СТОЛИЦЕ</p>
 
-                <h1>Открой для себя <span>Астану</span></h1>
+            <div class="hero-text">
+
+                <p class="subtitle">DISCOVER · EXPLORE · EXPERIENCE</p>
+
+                <h1>
+                    Открой для себя
+                    <span>Астану</span>
+                </h1>
 
                 <p class="hero-description">
-                    Исследуй красивые места, необычную архитектуру
-                    и достопримечательности столицы Казахстана.
-                    Найди своё любимое место в городе.
+                    Исследуй архитектуру, историю и удивительные
+                    достопримечательности столицы Казахстана.
+                    Открой город с новой стороны.
                 </p>
 
                 <% if (isAdmin) { %>
@@ -29,37 +36,62 @@
                     <span></span>
                     <span></span>
                 </div>
+
+                <p class="hero-caption">
+                    ASTANA GUIDE — DIGITAL CITY EXPERIENCE
+                </p>
+
             </div>
+
         </section>
 
+
+        <!-- WELCOME -->
         <section class="welcome-section">
-            <div class="welcome-decoration">✿</div>
-            <p>WELCOME TO ASTANA</p>
-            <h2>Город, который стоит увидеть</h2>
+
+            <div class="welcome-decoration">✧</div>
+
+            <p class="subtitle">WELCOME TO ASTANA</p>
+
+            <h2>Город будущего</h2>
+
             <span>
-                Архитектура, история и места, которые создают
-                особенный характер столицы.
+                Современная архитектура, культурное наследие
+                и уникальная атмосфера столицы.
             </span>
+
         </section>
 
+
+        <!-- PLACES -->
         <section class="places-section">
+
             <div class="section-heading">
+
                 <div>
-                    <p class="subtitle">DISCOVER THE CITY</p>
+                    <p class="subtitle">EXPLORE THE CAPITAL</p>
                     <h2>Интересные места</h2>
                 </div>
 
                 <span class="places-count">
-                    <%= places.length %> мест
+                    <%= places.length %> МЕСТ
                 </span>
+
             </div>
+
 
             <% if (places.length === 0) { %>
 
                 <div class="empty-state">
-                    <span class="empty-flower">✿</span>
+
+                    <span class="empty-flower">✧</span>
+
                     <h3>Пока нет достопримечательностей</h3>
-                    <p>Скоро здесь появятся интересные места Астаны.</p>
+
+                    <p>
+                        Скоро здесь появятся интересные места Астаны.
+                    </p>
+
                 </div>
 
             <% } else { %>
@@ -73,17 +105,21 @@
                             <div class="card-image-wrapper">
 
                                 <% if (place.image) { %>
+
                                     <img
                                         src="<%= place.image %>"
                                         alt="<%= place.title %>"
                                         class="card-image"
                                         onerror="this.style.display='none'"
                                     >
+
                                 <% } else { %>
+
                                     <div class="image-placeholder">
                                         <span>ASTANA</span>
-                                        <span class="placeholder-flower">✿</span>
+                                        <span class="placeholder-flower">✧</span>
                                     </div>
+
                                 <% } %>
 
                                 <span class="card-number">
@@ -91,6 +127,7 @@
                                 </span>
 
                             </div>
+
 
                             <div class="card-content">
 
@@ -115,6 +152,7 @@
                                 >
                                     Подробнее <span>→</span>
                                 </a>
+
 
                                 <% if (isAdmin) { %>
 
@@ -146,6 +184,7 @@
                                 <% } %>
 
                             </div>
+
                         </article>
 
                     <% }); %>
@@ -153,31 +192,47 @@
                 </div>
 
             <% } %>
+
         </section>
 
+
+        <!-- ABOUT -->
         <section class="about-banner">
+
             <div>
+
                 <p class="subtitle">GET TO KNOW THE CITY</p>
-                <h2>Астана — больше, чем просто город</h2>
+
+                <h2>
+                    Астана — больше,
+                    чем просто город
+                </h2>
+
                 <p>
                     Открой для себя столицу Казахстана
                     с новой стороны.
                 </p>
+
                 <a href="/about" class="banner-link">
                     О нашем проекте →
                 </a>
+
             </div>
 
-            <div class="banner-flower">✿</div>
+            <div class="banner-flower">✧</div>
+
         </section>
 
     </main>
 
+
     <%- include("partials/footer", { year: 2026 }) %>
+
 
     <script>
 
     // Удаление достопримечательности
+
     document.querySelectorAll(".delete-place").forEach(button => {
 
         button.addEventListener("click", async () => {
@@ -207,8 +262,10 @@
                 location.reload();
 
             } catch (error) {
+
                 console.error(error);
                 alert("Ошибка при удалении.");
+
             }
 
         });
@@ -217,6 +274,7 @@
 
 
     // Редактирование достопримечательности
+
     document.querySelectorAll(".edit-place").forEach(button => {
 
         button.addEventListener("click", async () => {
@@ -289,8 +347,10 @@
                 location.reload();
 
             } catch (error) {
+
                 console.error(error);
                 alert("Ошибка при редактировании.");
+
             }
 
         });
