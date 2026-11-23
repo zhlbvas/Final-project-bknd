@@ -14,7 +14,6 @@
         <% if (errors.length > 0) { %>
             <div class="errors">
                 <strong>Проверь следующие поля:</strong>
-
                 <ul>
                     <% errors.forEach(function(error) { %>
                         <li><%= error %></li>
@@ -73,13 +72,15 @@
                 placeholder="baiterek.jpg"
             >
 
-            <button type="submit" class="button">
-                Сохранить место
-            </button>
+            <div class="form-actions">
+                <button type="submit" class="button">
+                    Сохранить место
+                </button>
 
-            <a href="/" class="back-link">
-                Вернуться на главную
-            </a>
+                <a href="/" class="back-btn">
+                    ← Назад к достопримечательностям
+                </a>
+            </div>
 
         </form>
     </main>

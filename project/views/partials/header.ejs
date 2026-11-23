@@ -9,8 +9,8 @@
         <% if (typeof isAdmin !== "undefined" && isAdmin) { %>
             <a href="/add">Добавить место</a>
 
-            <form action="/logout" method="POST" style="display:inline;">
-                <button type="submit" class="button">Выйти</button>
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit" class="logout-btn">Выйти</button>
             </form>
         <% } else { %>
             <a href="/login">Вход администратора</a>
