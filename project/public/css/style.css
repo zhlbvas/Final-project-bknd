@@ -1150,43 +1150,44 @@ footer {
 }
 
 /* =========================================================
-   FINAL HERO POSITION — LEFT TEXT / RIGHT 3D MODEL
-   Эти правила намеренно стоят в конце файла, чтобы
-   переопределить предыдущие настройки Hero.
+   FINAL HERO LAYOUT — TEXT LEFT / 3D MODEL RIGHT
+   Композиция по последнему референсу:
+   текст у левого края, широкая зона под 3D справа.
 ========================================================= */
 
-@media (min-width: 769px) {
+@media (min-width: 1101px) {
     .hero {
-        /* Растягиваем секцию на всю ширину окна,
-           даже если она находится внутри .container */
         width: 100vw;
         max-width: none;
         margin-left: calc(50% - 50vw);
-
         min-height: 680px;
-        padding: 65px clamp(28px, 7vw, 110px);
-        display: flex;
-        flex-direction: row;
+
+        display: grid;
+        grid-template-columns: minmax(480px, 42%) minmax(520px, 1fr);
+        column-gap: 8%;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: stretch;
+
+        padding: 55px 4.3% 55px;
         text-align: left;
         overflow: hidden;
+        box-sizing: border-box;
     }
 
-    /* Текстовая колонка занимает левую часть экрана */
     .hero-text {
-        width: min(48%, 650px);
-        max-width: 650px;
+        grid-column: 1;
+        width: 100%;
+        max-width: 610px;
         margin: 0;
-        flex: 0 0 48%;
+        justify-self: start;
         text-align: left;
         position: relative;
         z-index: 2;
     }
 
     .hero .subtitle {
+        margin: 0 0 24px;
         text-align: left;
-        margin-bottom: 24px;
     }
 
     .hero h1,
@@ -1195,11 +1196,16 @@ footer {
         text-align: left;
     }
 
+    .hero h1 {
+        font-size: clamp(54px, 4.5vw, 78px);
+        line-height: 1.1;
+        letter-spacing: -2px;
+    }
+
     .hero p,
     .hero .hero-description {
-        max-width: 510px;
-        margin-left: 0;
-        margin-right: 0;
+        max-width: 520px;
+        margin: 24px 0 28px;
         text-align: left;
     }
 
@@ -1208,18 +1214,18 @@ footer {
     }
 
     .hero .hero-caption {
-        margin-left: 0;
-        margin-right: 0;
+        margin: 18px 0 0;
         text-align: left;
     }
 
-    /* Правая половина остаётся свободной под 3D-модель.
-       Когда модель будет добавлена в HTML, её можно
-       разместить в отдельном .hero-model блоке. */
+    /* Правая зона — место под будущую 3D-модель */
     .hero-model {
-        width: 45%;
-        min-height: 480px;
-        margin-left: auto;
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+        min-height: 560px;
+        margin: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1229,50 +1235,83 @@ footer {
 
     .hero-model canvas,
     .hero-model model-viewer,
-    .hero-model img {
+    .hero-model img,
+    .hero-model video {
         display: block;
+        width: 100%;
         max-width: 100%;
-        max-height: 560px;
+        max-height: 620px;
         object-fit: contain;
     }
 }
 
-/* Планшет: сохраняем две зоны, но уменьшаем отступы */
+/* Ноутбуки и небольшие desktop-экраны */
 @media (min-width: 769px) and (max-width: 1100px) {
     .hero {
-        min-height: 600px;
-        padding-left: 5%;
-        padding-right: 5%;
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+        min-height: 620px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5%;
+        padding: 50px 5%;
+        text-align: left;
     }
 
     .hero-text {
-        width: 50%;
-        flex-basis: 50%;
+        width: 48%;
+        max-width: 540px;
+        flex: 0 0 48%;
+        margin: 0;
+        text-align: left;
     }
 
     .hero h1 {
-        font-size: clamp(42px, 5vw, 62px);
+        font-size: clamp(43px, 5vw, 60px);
+    }
+
+    .hero p,
+    .hero .hero-description {
+        text-align: left;
+    }
+
+    .hero .hero-dots {
+        justify-content: flex-start;
+    }
+
+    .hero .hero-caption {
+        text-align: left;
+    }
+
+    .hero-model {
+        width: 47%;
+        min-height: 420px;
+        margin-left: auto;
     }
 }
 
-/* Телефон: текст снова по центру, без смещения секции */
+/* Телефон и узкий планшет: текст по центру */
 @media (max-width: 768px) {
     .hero {
         width: 100%;
         max-width: 100%;
         margin-left: 0;
         min-height: 520px;
-        padding: 55px 20px;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 0;
+        padding: 55px 20px;
         text-align: center;
     }
 
     .hero-text {
         width: 100%;
         max-width: 100%;
-        flex: 0 1 auto;
         margin: 0 auto;
         text-align: center;
     }
@@ -1296,11 +1335,9 @@ footer {
         justify-content: center;
     }
 
-    /* 3D-модель пока скрываем на узком экране,
-       чтобы она не сжимала текст и не ломала первый экран. */
     .hero-model {
         width: 100%;
         min-height: 0;
-        
     }
 }
+
