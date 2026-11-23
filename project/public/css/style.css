@@ -1148,3 +1148,26 @@ footer {
         font-size: 27px;
     }
 }
+
+/* HERO — текст ближе к левому краю */
+
+@media (min-width: 769px) {
+    .hero {
+        width: 100vw;
+        max-width: none;
+        margin-left: calc(50% - 50vw);
+
+        padding-left: clamp(25px, 5vw, 80px) !important;
+        padding-right: 40px !important;
+
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .hero-text {
+        width: 48%;
+        max-width: 680px;
+        margin-left: 0 !important;
+        text-align: left;
+    }
+}
