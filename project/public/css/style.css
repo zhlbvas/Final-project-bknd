@@ -1673,3 +1673,30 @@ footer {
     color: #030409 !important;
     box-shadow: 0 0 20px rgba(37, 223, 255, 0.35);
 }
+/* Кнопка добавления достопримечательности */
+
+.add-place-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 26px;
+    border: 1px solid var(--blue);
+    border-radius: 35px;
+
+    background: transparent;
+    color: var(--blue) !important;
+
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+
+    transition: 0.3s;
+}
+
+.add-place-btn:hover {
+    background: var(--blue);
+    color: #030409 !important;
+    box-shadow: 0 0 22px rgba(37, 223, 255, 0.4);
+}
