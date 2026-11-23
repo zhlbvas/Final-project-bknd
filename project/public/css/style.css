@@ -1643,3 +1643,33 @@ footer {
         font-size: 26px;
     }
 }
+
+/* ===== LOGIN BACK BUTTON ===== */
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 25px;
+    margin-top: 15px;
+
+    border: 1px solid var(--blue);
+    border-radius: 35px;
+
+    background: transparent;
+    color: var(--blue) !important;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: var(--blue);
+    color: #030409 !important;
+    box-shadow: 0 0 20px rgba(37, 223, 255, 0.35);
+}
