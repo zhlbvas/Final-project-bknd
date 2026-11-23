@@ -1700,3 +1700,105 @@ footer {
     color: #030409 !important;
     box-shadow: 0 0 22px rgba(37, 223, 255, 0.4);
 }
+
+/* =====================================
+   HERO — LEFT TEXT / RIGHT 3D MODEL
+===================================== */
+
+@media (min-width: 769px) {
+
+    .hero {
+        min-height: 650px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 60px 5.5%;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    /* Левая текстовая колонка */
+
+    .hero-text {
+        width: 45%;
+        max-width: 620px;
+        margin: 0;
+        text-align: left;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-text .subtitle {
+        text-align: left;
+        margin-bottom: 25px;
+    }
+
+    .hero-text h1 {
+        text-align: left;
+        font-size: clamp(45px, 5vw, 75px);
+        line-height: 1.12;
+    }
+
+    .hero-description {
+        max-width: 540px;
+        margin: 25px 0 30px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    /* Кнопка */
+
+    .hero-text .add-place-btn,
+    .hero-text .button {
+        margin-top: 5px;
+    }
+
+    /* Индикаторы */
+
+    .hero-dots {
+        justify-content: flex-start;
+        margin-top: 45px;
+    }
+
+    /* Нижняя подпись */
+
+    .hero-caption {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+}
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
+
+@media (max-width: 768px) {
+
+    .hero {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-text {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-text .subtitle,
+    .hero-text h1,
+    .hero-description,
+    .hero-caption {
+        text-align: center;
+    }
+
+    .hero-description {
+        margin: 22px auto 25px;
+    }
+
+    .hero-dots {
+        justify-content: center;
+    }
+}
