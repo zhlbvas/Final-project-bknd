@@ -4,15 +4,6 @@
 
     <%- include("partials/header") %>
 
-    <!-- 3D СЦЕНА (после шапки сайта) -->
-    <section id="scene3d" class="scene3d">
-        <canvas></canvas>
-        <div class="scene3d-load">Загрузка сцены<div class="scene3d-bar"><i></i></div></div>
-        <div class="scene3d-err"></div>
-        <div class="scene3d-text">
-        </div>
-    </section>
-
     <main class="container">
 
         <!-- HERO -->
@@ -49,6 +40,14 @@
                     ASTANA GUIDE — DIGITAL CITY EXPERIENCE
                 </p>
 
+            </div>
+
+            <!-- 3D СЦЕНА (правая часть hero-блока) -->
+            <div id="scene3d" class="scene3d">
+                <canvas></canvas>
+                <div class="scene3d-load">Загрузка сцены<div class="scene3d-bar"><i></i></div></div>
+                <div class="scene3d-err"></div>
+                <div class="scene3d-text"></div>
             </div>
 
         </section>
