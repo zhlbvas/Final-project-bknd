@@ -7,8 +7,6 @@ const CONFIG = {
   model:       '/models/scene.glb',   // файл лежит в public/models/scene.glb
   exposure:    1.0,
   worldColor:  0x0d0f12,
-  transparent: true,    // прозрачный фон: видно свечение и фон вашей страницы
-  shiftX:      0.20,    // на сколько (доля ширины) сдвинуть модель вправо от текста (только на широких экранах)
   shadows:     true,
   environment: true,
 
@@ -16,14 +14,13 @@ const CONFIG = {
   clickTime:   1.5,     // секунда в клипе, где происходит "нажатие" (кадр 36 при 24 fps)
   idleSpeed:   0.35,    // скорость вращения тарелки в ожидании, рад/с
   mapTilt:     45,      // наклон камеры над картой, градусы
-  textIdle:    ['', 'Нажми на тарелку'],
-  textDone:    ['', 'Нажми на сцену, чтобы повторить']
+  textIdle:    'Нажмите на тарелку',
+  textDone:    'Астана · нажмите, чтобы повторить'
 };
 
 const box = document.getElementById('scene3d');   // блок на странице
 
 window.__scene3d = { module: true, box: !!box };
-console.log('[scene3d] scene.js запущен');
 
 if (box) { window.__scene3d.started = true; start(box); }
 else console.error('Не найден блок с id="scene3d" — проверьте разметку в index.ejs');
@@ -40,17 +37,9 @@ function start(box) {
   const barEl  = box.querySelector('.scene3d-bar i');
   const errEl  = box.querySelector('.scene3d-err');
   const textEl = box.querySelector('.scene3d-text');
-  // подпись внутри .scene3d-text: [заголовок, подсказка] (стили h2 и p уже есть в animation.css)
-  const setText = (t) => {
-    if (!textEl) return;
-    textEl.innerHTML = '';
-    if (!t) return;
-    if (t[0]) { const h = document.createElement('h2'); h.textContent = t[0]; textEl.append(h); }
-    const p = document.createElement('p'); p.textContent = t[1];
-    textEl.append(p);
-  };
+  const setText = (s) => { if (textEl) textEl.textContent = s; };
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: CONFIG.transparent });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace    = THREE.SRGBColorSpace;
   renderer.toneMapping         = THREE.AgXToneMapping;
@@ -61,7 +50,7 @@ function start(box) {
   }
 
   const scene = new THREE.Scene();
-  if (!CONFIG.transparent) scene.background = new THREE.Color(CONFIG.worldColor);
+  scene.background = new THREE.Color(CONFIG.worldColor);
   const pmrem = new THREE.PMREMGenerator(renderer);
 
   // В scene.glb камеры нет, поэтому камеру ведём сами (вертикальный угол 40°, как в Blender)
@@ -83,9 +72,6 @@ function start(box) {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // на широком экране сдвигаем картинку вправо, чтобы модель была справа от текста
-    const shift = window.innerWidth > 768 ? CONFIG.shiftX : 0;
-    camera.setViewOffset(w, h, -w * shift, 0, w, h);
     camera.updateProjectionMatrix();
   }
   new ResizeObserver(resize).observe(box);
@@ -144,7 +130,7 @@ function start(box) {
     state = 'run'; t0 = clock.elapsedTime;
     for (const a of actions) { a.paused = false; a.time = CONFIG.clickTime; }
     box.classList.add('is-playing');
-    setText(null);
+    setText('');
   }
   function reset() {
     for (const a of actions) { a.reset(); a.play(); a.paused = true; }
@@ -164,16 +150,9 @@ function start(box) {
     else if (state === 'done') reset();
   });
 
-  function fail(msg, e) {
-    if (loadEl) loadEl.classList.add('hidden');
-    if (errEl) { errEl.style.display = 'block'; errEl.textContent = msg; }
-    console.error('[scene3d]', msg, e);
-  }
-
   new GLTFLoader().load(
     CONFIG.model,
-    (gltf) => { try {
-      console.log('[scene3d] glb загружен, анимаций:', (gltf.animations || []).length);
+    (gltf) => {
       scene.add(gltf.scene);
 
       const byName = (n) => gltf.scene.getObjectByName(n);
@@ -199,16 +178,6 @@ function start(box) {
         if (o.isMesh && o.name.startsWith('AST_T_'))
           o.material = new THREE.MeshBasicMaterial({ color: 0x262421, toneMapped: false, side: THREE.DoubleSide });
       });
-
-      // чёрные пол и стена из Blender не нужны на прозрачном фоне: прячем и оставляем только тень
-      gltf.scene.traverse((o) => {
-        if (o.name === 'Plane001' || o.name === 'Plane.001' || o.name === 'Plane002' || o.name === 'Plane.002') o.visible = false;
-      });
-      const shadowFloor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.ShadowMaterial({ opacity: 0.45 }));
-      shadowFloor.rotation.x = -Math.PI / 2;
-      shadowFloor.position.set(camTarget.getWorldPosition(new THREE.Vector3()).x, 0.001, 0);
-      shadowFloor.receiveShadow = true;
-      scene.add(shadowFloor);
 
       // свет (в glb источников нет)
       const c0 = new THREE.Vector3(); camTarget.getWorldPosition(c0); c0.y = 0;
@@ -253,11 +222,17 @@ function start(box) {
       loaded = true;
       box.classList.add('is-ready');
       if (loadEl) loadEl.classList.add('hidden');
-      console.log('[scene3d] сцена готова');
-    } catch (err) { fail('Ошибка при сборке сцены: ' + err.message, err); } },
+    },
     (e) => { if (e.total && barEl) barEl.style.width = (e.loaded / e.total * 100).toFixed(0) + '%'; },
-    (e) => fail('Сцена не загрузилась. Проверьте, что файл лежит в public' + CONFIG.model +
-                ' и что в server.js включена раздача папки public (app.use(express.static("public"))).', e)
+    (e) => {
+      if (loadEl) loadEl.classList.add('hidden');
+      if (errEl) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Сцена не загрузилась. Проверьте, что файл лежит в public' +
+                            CONFIG.model + ' и что в server.js включена раздача папки public.';
+      }
+      console.error('Сцена не загрузилась:', e);
+    }
   );
 
   let visible = true;
