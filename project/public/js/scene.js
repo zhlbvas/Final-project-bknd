@@ -23,6 +23,7 @@ const CONFIG = {
 const box = document.getElementById('scene3d');   // блок на странице
 
 window.__scene3d = { module: true, box: !!box };
+console.log('[scene3d] scene.js запущен');
 
 if (box) { window.__scene3d.started = true; start(box); }
 else console.error('Не найден блок с id="scene3d" — проверьте разметку в index.ejs');
@@ -163,9 +164,16 @@ function start(box) {
     else if (state === 'done') reset();
   });
 
+  function fail(msg, e) {
+    if (loadEl) loadEl.classList.add('hidden');
+    if (errEl) { errEl.style.display = 'block'; errEl.textContent = msg; }
+    console.error('[scene3d]', msg, e);
+  }
+
   new GLTFLoader().load(
     CONFIG.model,
-    (gltf) => {
+    (gltf) => { try {
+      console.log('[scene3d] glb загружен, анимаций:', (gltf.animations || []).length);
       scene.add(gltf.scene);
 
       const byName = (n) => gltf.scene.getObjectByName(n);
@@ -245,17 +253,11 @@ function start(box) {
       loaded = true;
       box.classList.add('is-ready');
       if (loadEl) loadEl.classList.add('hidden');
-    },
+      console.log('[scene3d] сцена готова');
+    } catch (err) { fail('Ошибка при сборке сцены: ' + err.message, err); } },
     (e) => { if (e.total && barEl) barEl.style.width = (e.loaded / e.total * 100).toFixed(0) + '%'; },
-    (e) => {
-      if (loadEl) loadEl.classList.add('hidden');
-      if (errEl) {
-        errEl.style.display = 'block';
-        errEl.textContent = 'Сцена не загрузилась. Проверьте, что файл лежит в public' +
-                            CONFIG.model + ' и что в server.js включена раздача папки public.';
-      }
-      console.error('Сцена не загрузилась:', e);
-    }
+    (e) => fail('Сцена не загрузилась. Проверьте, что файл лежит в public' + CONFIG.model +
+                ' и что в server.js включена раздача папки public (app.use(express.static("public"))).', e)
   );
 
   let visible = true;

@@ -1,4 +1,3 @@
-
 <%- include("partials/head", { title: title }) %>
 
 <body class="astana-page">
@@ -9,6 +8,14 @@
 
         <!-- HERO -->
         <section class="hero">
+
+            <!-- 3D-сцена: лежит фоном на весь hero, модель сдвинута вправо -->
+            <section id="scene3d" class="scene3d scene3d--hero">
+                <canvas></canvas>
+                <div class="scene3d-load">Загрузка сцены<div class="scene3d-bar"><i></i></div></div>
+                <div class="scene3d-err"></div>
+                <div class="scene3d-text"></div>
+            </section>
 
             <div class="hero-text">
 
@@ -25,17 +32,11 @@
                     Открой город с новой стороны.
                 </p>
 
-             <% if (isAdmin) { %>
-    <a href="/add" class="button add-place-btn">
-        + Добавить достопримечательность
-    </a>
-    <section id="scene3d" class="scene3d scene3d--hero">
-  <canvas></canvas>
-  <div class="scene3d-load">Загрузка сцены<div class="scene3d-bar"><i></i></div></div>
-  <div class="scene3d-err"></div>
-  <div class="scene3d-text"></div>
-</section>
-<% } %>
+                <% if (isAdmin) { %>
+                    <a href="/add" class="button add-place-btn">
+                        + Добавить достопримечательность
+                    </a>
+                <% } %>
 
                 <div class="hero-dots">
                     <span></span>
@@ -363,6 +364,33 @@
 
     });
 
+    </script>
+
+
+    <!-- ===== 3D-сцена ===== -->
+    <!-- importmap должен стоять ДО модуля. Если он уже есть в partials/head.ejs, этот блок удалите. -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module" src="/js/scene.js"></script>
+
+    <!-- Диагностика: если через 6 секунд scene.js так и не запустился, скажет об этом на странице -->
+    <script>
+    setTimeout(function () {
+        if (window.__scene3d && window.__scene3d.started) return;
+        var err = document.querySelector('.scene3d-err'), load = document.querySelector('.scene3d-load');
+        if (load) load.classList.add('hidden');
+        if (err) {
+            err.style.display = 'block';
+            err.textContent = 'scene.js не запустился. Откройте консоль (F12): проверьте, что файл лежит в public/js/scene.js, ' +
+                              'что importmap подключён один раз и что нет ошибок загрузки three из cdn.jsdelivr.net.';
+        }
+    }, 6000);
     </script>
 
 </body>
