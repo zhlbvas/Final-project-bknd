@@ -84,7 +84,7 @@ function start(box) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // на широком экране сдвигаем картинку вправо, чтобы модель была справа от текста
-    const shift = w > 900 ? CONFIG.shiftX : 0;
+    const shift = window.innerWidth > 768 ? CONFIG.shiftX : 0;
     camera.setViewOffset(w, h, -w * shift, 0, w, h);
     camera.updateProjectionMatrix();
   }
