@@ -102,3 +102,21 @@
     bottom: 16px;
   }
 }
+/* Допишите ПОСЛЕ кода из animation.css в css/style.css.
+   Блок сцены делаем выше (250px мало для карты) и оживляем подсказку. */
+.scene3d {
+  height: clamp(380px, 62vh, 620px);
+}
+@media (max-width: 700px) {
+  .scene3d { height: clamp(340px, 60vh, 480px); }
+}
+
+/* подсказка мягко пульсирует, пока тарелка ждёт клика */
+.scene3d:not(.is-playing):not(.is-done) .scene3d-text p {
+  animation: scene3d-pulse 1.8s ease-in-out infinite;
+}
+@keyframes scene3d-pulse { 50% { opacity: .45; } }
+
+/* во время анимации подпись скрыта, на карте остаётся только сцена */
+.scene3d.is-playing .scene3d-text { opacity: 0; transition: opacity .3s; }
+.scene3d.is-done .scene3d-text   { opacity: 1; transition: opacity .8s .4s; }

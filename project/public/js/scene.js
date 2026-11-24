@@ -14,8 +14,8 @@ const CONFIG = {
   clickTime:   1.5,     // секунда в клипе, где происходит "нажатие" (кадр 36 при 24 fps)
   idleSpeed:   0.35,    // скорость вращения тарелки в ожидании, рад/с
   mapTilt:     45,      // наклон камеры над картой, градусы
-  textIdle:    'Нажмите на тарелку',
-  textDone:    'Астана · нажмите, чтобы повторить'
+  textIdle:    ['Астана', 'Нажмите на тарелку с бауырсаками'],
+  textDone:    ['Астана', 'Нажмите на сцену, чтобы повторить']
 };
 
 const box = document.getElementById('scene3d');   // блок на странице
@@ -37,7 +37,15 @@ function start(box) {
   const barEl  = box.querySelector('.scene3d-bar i');
   const errEl  = box.querySelector('.scene3d-err');
   const textEl = box.querySelector('.scene3d-text');
-  const setText = (s) => { if (textEl) textEl.textContent = s; };
+  // подпись внутри .scene3d-text: [заголовок, подсказка] (стили h2 и p уже есть в animation.css)
+  const setText = (t) => {
+    if (!textEl) return;
+    textEl.innerHTML = '';
+    if (!t) return;
+    const h = document.createElement('h2'); h.textContent = t[0];
+    const p = document.createElement('p');  p.textContent = t[1];
+    textEl.append(h, p);
+  };
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -130,7 +138,7 @@ function start(box) {
     state = 'run'; t0 = clock.elapsedTime;
     for (const a of actions) { a.paused = false; a.time = CONFIG.clickTime; }
     box.classList.add('is-playing');
-    setText('');
+    setText(null);
   }
   function reset() {
     for (const a of actions) { a.reset(); a.play(); a.paused = true; }
