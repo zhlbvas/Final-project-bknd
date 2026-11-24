@@ -103,20 +103,65 @@
   }
 }
 /* Допишите ПОСЛЕ кода из animation.css в css/style.css.
-   Блок сцены делаем выше (250px мало для карты) и оживляем подсказку. */
-.scene3d {
-  height: clamp(380px, 62vh, 620px);
-}
-@media (max-width: 700px) {
-  .scene3d { height: clamp(340px, 60vh, 480px); }
+   Сцена лежит на весь хиро-экран (фон), модель сдвинута вправо от текста кодом (shiftX в scene.js).
+
+   Требования к разметке:
+   1) родитель хиро-блока (тот, где заголовок «Открой для себя Астану») имеет position: relative;
+   2) <section id="scene3d" class="scene3d scene3d--hero"> стоит ВНУТРИ него, ПЕРЕД блоком с текстом. */
+
+.scene3d--hero {
+  position: absolute;
+  inset: 0;
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  z-index: 0;
 }
 
-/* подсказка мягко пульсирует, пока тарелка ждёт клика */
-.scene3d:not(.is-playing):not(.is-done) .scene3d-text p {
+/* текст и кнопки поверх сцены; пустые места текстового блока пропускают клик к тарелке */
+.scene3d--hero ~ * {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+.scene3d--hero ~ * :is(a, button, input, select, textarea, label) {
+  pointer-events: auto;
+}
+
+/* загрузка в стиле сайта */
+.scene3d--hero .scene3d-load { background: transparent; color: #7fdcff; letter-spacing: .08em; }
+.scene3d--hero .scene3d-bar i { background: #22d3ee; box-shadow: 0 0 10px #22d3ee; }
+
+/* подсказка под моделью, неоновая */
+.scene3d--hero .scene3d-text {
+  left: 70%;
+  right: auto;
+  bottom: 6%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.scene3d--hero .scene3d-text p {
+  color: #22d3ee;
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(34, 211, 238, .7);
+}
+.scene3d--hero:not(.is-playing):not(.is-done) .scene3d-text p {
   animation: scene3d-pulse 1.8s ease-in-out infinite;
 }
-@keyframes scene3d-pulse { 50% { opacity: .45; } }
+@keyframes scene3d-pulse { 50% { opacity: .35; } }
+.scene3d--hero.is-playing .scene3d-text { opacity: 0; transition: opacity .3s; }
+.scene3d--hero.is-done .scene3d-text   { opacity: 1; transition: opacity .8s .4s; }
 
-/* во время анимации подпись скрыта, на карте остаётся только сцена */
-.scene3d.is-playing .scene3d-text { opacity: 0; transition: opacity .3s; }
-.scene3d.is-done .scene3d-text   { opacity: 1; transition: opacity .8s .4s; }
+/* телефон и узкие экраны: сцена под текстом, без сдвига */
+@media (max-width: 900px) {
+  .scene3d--hero {
+    position: relative;
+    inset: auto;
+    height: clamp(340px, 60vh, 460px);
+  }
+  .scene3d--hero ~ * { pointer-events: auto; }
+  .scene3d--hero .scene3d-text { left: 50%; }
+}
